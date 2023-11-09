@@ -1,0 +1,15 @@
+.parent {
+    /* max-width: 520px; */
+    border: 1px solid #ccc;
+    padding: 10px;
+    /* inline-block の親要素に text-align: center を設定 */
+    text-align: center;
+  }
+  .child {
+    /* インラインブロック */
+    display: inline-block;
+    background-color: #497550;
+    color: #fff;
+    padding: 10px;
+    margin: 5px;
+  }
