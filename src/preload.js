@@ -15,5 +15,9 @@ contextBridge.exposeInMainWorld('testapi', {
   testHoge: () => console.log(77),
   getEmployee: async (data) => await ipcRenderer.invoke('getEmployee', data),
   getPositions: async (data) => await ipcRenderer.invoke('getPositions', data),
-  createExcel: async (path, data) => await ipcRenderer.invoke('createExcel', path,data)
+  getPosition: async (data) => await ipcRenderer.invoke('getPosition', data),
+  createPosition: async (data) => await ipcRenderer.invoke('createPosition', data),
+  updatePosition: async (data) => await ipcRenderer.invoke('updatePosition', data),
+  deletePosition: async (data) => await ipcRenderer.invoke('deletePosition', data),
+  createExcel: async (path, data) => await ipcRenderer.invoke('createExcel', path, data)
 })

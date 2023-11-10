@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+  <title>hoge</title>
+  <script src="../../../node_modules/gridjs/dist/gridjs.umd.js"></script>
+
+  <link href="../../../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../../../node_modules/gridjs/dist/theme/mermaid.min.css" rel="stylesheet" />
+  <script src="../render/hoge2.js"></script>
+</head>
+
+<body>
+  <div class="container text-center">
+    <h1>hoge2</h1>
+
+    <div class="row mt-3">
+      <div class="col">
+        <label for="position_id">ID</label>
+        <input class="form-control input-lg" disabled ="text" id="position_id"></input>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col">
+        <label for="position_name">役職</label>
+        <input class="form-control input-lg" type="text" id="position_name"></input>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col">
+        <label for="role"></label>ロール</label>
+        <input class="form-control input-lg" type="text" id="role"></input>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col">
+        <label for="display_order"></label>表示順</label>
+        <input class="form-control input-lg" type="text" id="display_order"></input>
+      </div>
+    </div>
+    <div class="row mt-5 mb-5">
+      <div class="col"><button class="btn btn-secondary" id="back">戻る</button></div>
+      <div class="col"><button class="btn btn-danger" id="delete_position">削除</button></div>
+      <div class="col"><button class="btn btn-primary" id="register_position">登録</button></div>
+    </div>
+  </div>
+</body>
+
+</html>
