@@ -9,7 +9,7 @@ exports.execute = async function (sql, param) {
     log.info(sql)
     log.info(param)
 
-    let connection = await await mysql.createConnection({
+    let connection = await mysql.createConnection({
         host: 'localhost',
         user: 'admin',
         password: 'admin',
