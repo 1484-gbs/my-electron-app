@@ -2,20 +2,16 @@ const { app, BrowserWindow, ipcMain, dialog, shell } = require('electron')
 const path = require('node:path')
 const getEmployee = require('./api/getEmployee.js')
 const position = require('./api/position.js')
-//const getPositions = require('./api/getPositions.js')
 const createExcel = require('./api/createExcel.js')
 
 let win
 const createWindow = () => {
     win = new BrowserWindow({
-        width: 1200,
-        height: 800,
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
         },
         sandbox: false
     })
-
     win.loadFile('./src/front/html/hoge.html')
     win.webContents.openDevTools()
     win.setMenuBarVisibility(false);
@@ -44,10 +40,10 @@ app.whenReady().then(() => {
     })
 
     ipcMain.handle('createPosition', async (event, data) => {
+        if (!position.isValid(data)) {
+            return showInvalidMessage()
+        }
         try {
-            if(!position.isValid(data)) {
-                return showInvalidMessage()
-            }
             await position.create(data);
         } catch (err) {
             return showErrorDialog(err)
@@ -56,10 +52,10 @@ app.whenReady().then(() => {
     })
 
     ipcMain.handle('updatePosition', async (event, data) => {
+        if (!position.isValid(data)) {
+            return showInvalidMessage()
+        }
         try {
-            if(!position.isValid(data)) {
-                return showInvalidMessage()
-            }
             await position.update(data)
         } catch (err) {
             return showErrorDialog(err)
@@ -68,12 +64,7 @@ app.whenReady().then(() => {
     })
 
     ipcMain.handle('deletePosition', async (event, data) => {
-        const ans = await dialog.showMessageBox(win, {
-            type: 'question',
-            message: '削除します。よろしいですか？',
-            buttons: ['OK', 'キャンセル'],
-            noLink: true
-        })
+        const ans = await showConfirmMessage('削除します。よろしいですか？')
         if (ans.response === 1) return false
         try {
             await position.delete(data);
@@ -108,10 +99,10 @@ app.whenReady().then(() => {
             return ({ status: undefined });
         }
 
-        let result_path 
-        try{
+        let result_path
+        try {
             result_path = await createExcel.execute(path, data);
-        }catch (err) {
+        } catch (err) {
             return showErrorDialog(err)
         }
         shell.showItemInFolder(result_path)
@@ -144,4 +135,14 @@ showInvalidMessage = async function (message) {
         message: '入力値が不正です'
     });
     return false
+}
+
+showConfirmMessage = async function (message, buttons, cancelId) {
+    return await dialog.showMessageBox(win, {
+        type: 'question',
+        message: message,
+        buttons: buttons ?? ['OK', 'キャンセル'],
+        noLink: true,
+        cancelId: cancelId ?? 1
+    })
 }

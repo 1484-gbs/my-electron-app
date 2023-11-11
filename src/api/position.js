@@ -1,5 +1,4 @@
 const dbConn = require('../db/dbConn.js')
-const dialog = require('electron')
 
 exports.findAll = async function () {
     var result = await dbConn.execute("SELECT * FROM position")
@@ -24,7 +23,8 @@ exports.update = async function (data) {
             data.role,
             data.display_order,
             data.position_id
-        ])
+        ]
+    )
     return result
 }
 exports.create = async function (data) {
@@ -37,7 +37,8 @@ exports.create = async function (data) {
             data.position_name,
             data.role,
             data.display_order
-        ])
+        ]
+    )
     return result
 }
 exports.delete = async function (data) {
@@ -46,7 +47,8 @@ exports.delete = async function (data) {
         "DELETE FROM position " +
         "WHERE " +
         "  position_id = ?",
-        [data])
+        [data]
+    )
     return result
 }
 
