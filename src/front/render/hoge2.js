@@ -1,5 +1,14 @@
 
 document.addEventListener('DOMContentLoaded', async function () {
+ 
+    back = function () {
+        window.location.href = "hoge.html"
+    }
+ 
+    document.getElementById('back').addEventListener('click', async function (clickEvent) {
+        back()
+    }, false);
+
     const searchParams = new URLSearchParams(window.location.search);
     console.log(searchParams)
     const positionId = searchParams.get("id");
@@ -34,10 +43,6 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     }, false);
 
-    document.getElementById('back').addEventListener('click', async function (clickEvent) {
-        back()
-    }, false);
-
     document.getElementById('delete_position').addEventListener('click', async function (clickEvent) {
         const position_id = document.getElementById("position_id").value
         let result = true
@@ -47,9 +52,6 @@ document.addEventListener('DOMContentLoaded', async function () {
         if(result) back()
     }, false);
 
-    back = function () {
-        window.location.href = "hoge.html"
-    }
 });
 
 

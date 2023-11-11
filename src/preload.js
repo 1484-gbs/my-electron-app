@@ -19,5 +19,5 @@ contextBridge.exposeInMainWorld('testapi', {
   createPosition: async (data) => await ipcRenderer.invoke('createPosition', data),
   updatePosition: async (data) => await ipcRenderer.invoke('updatePosition', data),
   deletePosition: async (data) => await ipcRenderer.invoke('deletePosition', data),
-  createExcel: async (path, data) => await ipcRenderer.invoke('createExcel', path, data)
+  createExcel: async (data) => await ipcRenderer.invoke('createExcel', data)
 })

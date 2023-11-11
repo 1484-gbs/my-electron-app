@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, dialog, shell } = require('electron')
+const { app, BrowserWindow, dialog } = require('electron')
 const path = require('node:path')
 const getEmployee = require('./api/getEmployee.js')
 const position = require('./api/position.js')
@@ -22,98 +22,20 @@ app.whenReady().then(() => {
     app.on('activate', () => {
         if (BrowserWindow.getAllWindows().length === 0) createWindow()
     })
-
-    ipcMain.handle('getEmployee', async (event, data) => {
-        try {
-            return await getEmployee.execute(data);
-        } catch (err) {
-            showErrorDialog(err)
-        }
-    })
-
-    ipcMain.handle('getPosition', async (event, data) => {
-        try {
-            return await position.findById(data);
-        } catch (err) {
-            showErrorDialog(err)
-        }
-    })
-
-    ipcMain.handle('createPosition', async (event, data) => {
-        if (!position.isValid(data)) {
-            return showInvalidMessage()
-        }
-        try {
-            await position.create(data);
-        } catch (err) {
-            return showErrorDialog(err)
-        }
-        return showCompleteDialog('登録完了')
-    })
-
-    ipcMain.handle('updatePosition', async (event, data) => {
-        if (!position.isValid(data)) {
-            return showInvalidMessage()
-        }
-        try {
-            await position.update(data)
-        } catch (err) {
-            return showErrorDialog(err)
-        }
-        return showCompleteDialog('登録完了')
-    })
-
-    ipcMain.handle('deletePosition', async (event, data) => {
-        const ans = await showConfirmMessage('削除します。よろしいですか？')
-        if (ans.response === 1) return false
-        try {
-            await position.delete(data);
-        } catch (err) {
-            return showErrorDialog(err)
-        }
-        return showCompleteDialog('削除完了')
-    })
-
-    ipcMain.handle('getPositions', async (event, data) => {
-        try {
-            return await position.findAll();
-        } catch (err) {
-            showErrorDialog(err)
-        }
-
-    })
-
-    ipcMain.handle('createExcel', async (event, data) => {
-        const path = dialog.showSaveDialogSync(win, {
-            buttonLabel: '保存',  // ボタンのラベル
-            filters: [
-                { name: 'csv', extensions: ['csv'] },
-            ],
-            properties: [
-                'createDirectory',  // ディレクトリの作成を許可 (macOS)
-            ]
-        });
-
-        // キャンセルで閉じた場合
-        if (path === undefined) {
-            return ({ status: undefined });
-        }
-
-        let result_path
-        try {
-            result_path = await createExcel.execute(path, data);
-        } catch (err) {
-            return showErrorDialog(err)
-        }
-        shell.showItemInFolder(result_path)
-    })
+    getEmployee.execute(win)
+    position.findAll(win)
+    position.findById(win)
+    position.create(win)
+    position.update(win)
+    position.delete(win)
+    createExcel.execute(win)
 })
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') app.quit()
 })
 
-showErrorDialog = async function (err) {
+showErrorDialog = async function (win, err) {
     await dialog.showMessageBox(win, {
         type: 'error',
         message: 'エラーが発生しました。: ' + err
@@ -121,7 +43,7 @@ showErrorDialog = async function (err) {
     return false
 }
 
-showCompleteDialog = async function (message) {
+showCompleteDialog = async function (win, message) {
     await dialog.showMessageBox(win, {
         type: 'info',
         message: message
@@ -129,15 +51,15 @@ showCompleteDialog = async function (message) {
     return true
 }
 
-showInvalidMessage = async function (message) {
+showInvalidMessage = async function (win, message) {
     await dialog.showMessageBox(win, {
         type: 'error',
-        message: '入力値が不正です'
+        message: message ?? '入力値が不正です'
     });
     return false
 }
 
-showConfirmMessage = async function (message, buttons, cancelId) {
+showConfirmMessage = async function (win, message, buttons, cancelId) {
     return await dialog.showMessageBox(win, {
         type: 'question',
         message: message,
