@@ -1,12 +1,11 @@
-const dbConn = require('../db/dbConn.js')
 const { BrowserWindow, ipcMain } = require('electron')
-const customDialog = require('./common/customDialog')
+const positionService = require('../service/positionService.js')
+const customDialog = require('./common/customDialog');
 
 exports.findAll = async function (win) {
     ipcMain.handle('getPositions', async (event, data) => {
         try {
-            var result = await dbConn.execute("SELECT * FROM position")
-            return result
+            return await positionService.findAll()
         } catch (err) {
             customDialog.showErrorDialog(win, err)
         }
@@ -17,8 +16,7 @@ exports.findById = async function (win) {
     ipcMain.handle('getPosition', async (event, data) => {
         try {
             console.log(data)
-            var result = await dbConn.execute("SELECT * FROM position where position_id = ?", [data])
-            return result
+            return await positionService.findById(data)
         } catch (err) {
             customDialog.showErrorDialog(win, err)
         }
@@ -31,17 +29,7 @@ exports.create = async function (win) {
             return customDialog.showInvalidMessage(win)
         }
         try {
-            console.log(data)
-            await dbConn.execute(
-                "INSERT INTO `position`" +
-                "(position_name, `role`, display_order)" +
-                "VALUES(?, ?, ?)",
-                [
-                    data.position_name,
-                    data.role,
-                    data.display_order
-                ]
-            )
+            await positionService.create(data)
         } catch (err) {
             return customDialog.showErrorDialog(win, err)
         }
@@ -55,21 +43,7 @@ exports.update = async function (win) {
             return customDialog.showInvalidMessage(win)
         }
         try {
-            console.log(data)
-            var result = await dbConn.execute(
-                "UPDATE position SET " +
-                "  position_name = ? ," +
-                "  role = ?, " +
-                "  display_order = ? " +
-                "WHERE " +
-                "  position_id = ?",
-                [
-                    data.position_name,
-                    data.role,
-                    data.display_order,
-                    data.position_id
-                ]
-            )
+            await positionService.update(data)
         } catch (err) {
             return customDialog.showErrorDialog(win, err)
         }
@@ -83,12 +57,7 @@ exports.delete = async function (win) {
         if (ans.response === 1) return false
         try {
             console.log(data)
-            await dbConn.execute(
-                "DELETE FROM position " +
-                "WHERE " +
-                "  position_id = ?",
-                [data]
-            )
+            await positionService.delete(data)
         } catch (err) {
             return customDialog.showErrorDialog(win, err)
         }
