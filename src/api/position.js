@@ -1,5 +1,6 @@
 const dbConn = require('../db/dbConn.js')
 const { BrowserWindow, ipcMain } = require('electron')
+const customDialog = require('./common/customDialog')
 
 exports.findAll = async function (win) {
     ipcMain.handle('getPositions', async (event, data) => {
@@ -7,7 +8,7 @@ exports.findAll = async function (win) {
             var result = await dbConn.execute("SELECT * FROM position")
             return result
         } catch (err) {
-            showErrorDialog(win, err)
+            customDialog.showErrorDialog(win, err)
         }
     })
 
@@ -19,7 +20,7 @@ exports.findById = async function (win) {
             var result = await dbConn.execute("SELECT * FROM position where position_id = ?", [data])
             return result
         } catch (err) {
-            showErrorDialog(win, err)
+            customDialog.showErrorDialog(win, err)
         }
     })
 }
@@ -27,7 +28,7 @@ exports.findById = async function (win) {
 exports.create = async function (win) {
     ipcMain.handle('createPosition', async (event, data) => {
         if (!isValid(data)) {
-            return showInvalidMessage(win)
+            return customDialog.showInvalidMessage(win)
         }
         try {
             console.log(data)
@@ -42,16 +43,16 @@ exports.create = async function (win) {
                 ]
             )
         } catch (err) {
-            return showErrorDialog(win, err)
+            return customDialog.showErrorDialog(win, err)
         }
-        return showCompleteDialog(win, '登録完了')
+        return customDialog.showCompleteDialog(win, '登録完了')
     })
 }
 
 exports.update = async function (win) {
     ipcMain.handle('updatePosition', async (event, data) => {
         if (!isValid(data)) {
-            return showInvalidMessage(win)
+            return customDialog.showInvalidMessage(win)
         }
         try {
             console.log(data)
@@ -70,15 +71,15 @@ exports.update = async function (win) {
                 ]
             )
         } catch (err) {
-            return showErrorDialog(win, err)
+            return customDialog.showErrorDialog(win, err)
         }
-        return showCompleteDialog(win, '登録完了')
+        return customDialog.showCompleteDialog(win, '登録完了')
     })
 }
 
 exports.delete = async function (win) {
     ipcMain.handle('deletePosition', async (event, data) => {
-        const ans = await showConfirmMessage(win, '削除します。よろしいですか？')
+        const ans = await customDialog.showConfirmMessage(win, '削除します。よろしいですか？')
         if (ans.response === 1) return false
         try {
             console.log(data)
@@ -89,9 +90,9 @@ exports.delete = async function (win) {
                 [data]
             )
         } catch (err) {
-            return showErrorDialog(win, err)
+            return customDialog.showErrorDialog(win, err)
         }
-        return showCompleteDialog(win, '削除完了')
+        return customDialog.showCompleteDialog(win, '削除完了')
     })
 }
 

@@ -15,6 +15,7 @@
     "csv-writer": "^1.6.0",
     "electron-log": "^5.0.0",
     "electron-squirrel-startup": "^1.0.0",
+    "exceljs": "^4.4.0",
     "gridjs": "^6.0.6",
     "mysql2": "^3.6.3"
   },
