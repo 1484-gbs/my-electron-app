@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; img-src 'self' data:;">
+  <title>register</title>
+  <script src="../../../node_modules/gridjs/dist/gridjs.umd.js"></script>
+  <script src="../../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  <link href="../../../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../../../node_modules/gridjs/dist/theme/mermaid.min.css" rel="stylesheet" />
+  <script src="../render/common/menu.js"></script>
+</head>
+
+<body>
+  <header class="sticky-top" id="header"></header>
+  <div class="container">
+    <h1>register</h1>
+    <div class="row mt-3">
+      <div class="col-6">
+        <label for="id" class="col-form-label">番号</label>
+        <input class="form-control" type="text" disabled id="id" value="xxxx"></input>
+      </div>
+      <div class="col-6">
+        <label for="position_id" class="col-form-label">年月</label>
+        <select id="targetYM" class="form-select">
+          <option value="YYYYMM">YYYYMM</option>
+        </select>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-6">
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" id="same_address">
+          <label for="same_address" class="form-check-label">チェックボックス</label>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-6">
+        <label for="zip_code" class="col-form-label">郵便番号</label>
+        <!-- <div class="col-10"> -->
+        <input class="form-control input-lg" type="text" id="zip_code"></input>
+        <!-- </div> -->
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col">
+        <label for="zip_code" class="col-form-label">住所</label>
+        <!-- <div class="col-10"> -->
+        <input class="form-control input-lg" type="text" id="address"></input>
+        <!-- </div> -->
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-6">
+        <label for="role" class="col-form-label"></label>姓</label>
+        <input class="form-control input-lg" type="text" id="role"></input>
+      </div>
+      <div class="col-6">
+        <label for="display_order" class="col-form-label"></label>名</label>
+        <input class="form-control input-lg" type="text" id="display_order"></input>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-6">
+        <label for="role" class="col-form-label"></label>セイ</label>
+        <input class="form-control input-lg" type="text" id="role"></input>
+      </div>
+      <div class="col-6">
+        <label for="display_order" class="col-form-label"></label>メイ</label>
+        <input class="form-control input-lg" type="text" id="display_order"></input>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-6">
+        <label for="position_id" class="col-form-label">景品</label>
+        <select id="targetYM" class="form-select">
+          <option value="coke">コカ・コーラ</option>
+        </select>
+      </div>
+    </div>
+    <div class="row mt-5 mb-5 text-center">
+      <div class="col"><button class="btn btn-secondary" id="back">戻る</button></div>
+      <div class="col"><button class="btn btn-danger" id="delete_position">削除</button></div>
+      <div class="col"><button class="btn btn-primary" id="register_position">登録</button></div>
+    </div>
+  </div>
+</body>
+
+</html>

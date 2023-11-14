@@ -19,7 +19,7 @@ exports.execute = async function (win) {
         if (path === undefined) {
             return ({ status: undefined });
         }
-
+        console.log(path)
         try {
             await createExcelService.execute(path)
         } catch (err) {

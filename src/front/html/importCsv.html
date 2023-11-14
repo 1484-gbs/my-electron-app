@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; img-src 'self' data:;">
+  <title>hoge</title>
+  <script src="../../../node_modules/gridjs/dist/gridjs.umd.js"></script>
+  <script src="../../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  <link href="../../../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../../../node_modules/gridjs/dist/theme/mermaid.min.css" rel="stylesheet" />
+  <script src="../render/importCsv.js"></script>
+  <script src="../render/common/menu.js"></script>
+  
+</head>
+
+<body>
+  <header class="sticky-top" id="header"></header>
+  <form>
+    <div class="container text-center">
+      <h1>hoge!</h1>
+      <div class="row mt-5 mb-5">
+        <div class="col"><button type="button" class="btn btn-primary" id="import_csv">import Excel</button></div>
+      </div>
+    </div>
+  </form>
+</body>
+
+</html>
