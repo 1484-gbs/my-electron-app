@@ -25,9 +25,11 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     if (grid) {
         if (grid.config.pagenation) grid.config.plugin.remove('pagenation')
+        if (grid.config.search) grid.config.plugin.remove('search')
         grid.updateConfig({
             data: list,
-            pagenation: 5
+            pagenation: 5,
+            search: true
         }).forceRender()
     } else {
         grid = new gridjs.Grid({
@@ -49,7 +51,8 @@ document.addEventListener('DOMContentLoaded', async function () {
             data: list,
             pagination: {
                 limit: 5
-            }
+            },
+            search: true
         }).render(document.getElementById('wrapper'));
     }
 

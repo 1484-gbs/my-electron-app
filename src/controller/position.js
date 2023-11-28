@@ -1,6 +1,6 @@
 const { BrowserWindow, ipcMain } = require('electron')
 const positionService = require('../service/positionService.js')
-const customDialog = require('./common/customDialog');
+const customDialog = require('./common/customDialog.js');
 
 exports.findAll = async function (win) {
     ipcMain.handle('getPositions', async (event, data) => {

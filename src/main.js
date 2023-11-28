@@ -1,9 +1,9 @@
 const { app, BrowserWindow } = require('electron')
 const path = require('node:path')
-const getEmployee = require('./api/getEmployee.js')
-const position = require('./api/position.js')
-const createExcel = require('./api/createExcel.js')
-const importCsv = require('./api/importCsv.js')
+const getEmployee = require('./controller/getEmployee.js')
+const position = require('./controller/position.js')
+const createExcel = require('./controller/createExcel.js')
+const importCsv = require('./controller/importCsv.js')
 
 let win
 const createWindow = () => {
@@ -14,7 +14,7 @@ const createWindow = () => {
         sandbox: false
     })
     win.loadFile('./src/front/html/hoge.html')
-    win.webContents.openDevTools()
+    //win.webContents.openDevTools()
     win.setMenuBarVisibility(false);
 }
 
