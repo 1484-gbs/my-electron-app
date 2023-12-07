@@ -22,8 +22,24 @@ exports.execute = async function (path) {
                 "INSERT INTO `position`" +
                 "(position_name, `role`, display_order)" +
                 " VALUES ?",
-                [param] 
+                [param]
             )
+            // const result = await Promise.all(
+            //     results.map((r) => 
+            //         dbConn.execute(
+            //             "INSERT INTO `position`" +
+            //             "(position_name, `role`, display_order)" +
+            //             "VALUES(?, ?, ?)",
+            //             [
+            //                 r.position_name,
+            //                 r.role,
+            //                 r.display_order
+            //             ]
+            //         )
+            //     )
+            // );
+            // console.log('result: ' + result);
+
         });
 
 }
